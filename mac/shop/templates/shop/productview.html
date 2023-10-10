@@ -1,0 +1,50 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}{{product.product_name}} - My Awsome Cart{% endblock %}
+
+{% block body %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <img src="/media/{{product.image}}" width="400px" height="300px">
+            </div>
+        </div>
+        <div class="col-md-5 mx-5">
+            <h1>{{product.product_name}}</h1>
+            <h3><b>Rs.{{product.price}}</b></h3><br>
+            <h4>{{product.decs}}</h4>
+        </div>
+        </div>
+        <div class="row">
+            <button class="btn btn-primary mx-4 my-4">Buy Now</button>
+            <button class="btn btn-primary cart my-4">Add to cart</button>
+        </div>
+
+</div>
+
+<script>
+    if(localStorage.getItem('cart')==null){
+    var cart={};
+    }
+    else{
+    cart = JSON.parse(localStorage.getItem('cart'));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length ;
+
+    }
+    $('.cart').click(function(){
+    var idstr = this.id.toString();
+    if(cart[idstr] !=undefined){
+    cart[idstr] += 1
+    }
+    else{
+    cart[idstr] = 1
+    }
+    console.log(cart);
+    localStorage.setItem('cart',JSON.stringify(cart));
+    });
+    $('#popcart').popover()
+    document.getElementById('popcart').setAttribute("data-content","<h4>Items selected in your cart</h4>")
+
+</script>
+{% endblock %}
